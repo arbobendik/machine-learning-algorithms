@@ -2,8 +2,6 @@
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
 
-from regression_system import Regression_Library as Reg
-from pattern_object import Pattern_Object
 
 
 class Pattern_Library:
