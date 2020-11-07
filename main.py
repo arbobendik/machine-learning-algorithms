@@ -73,6 +73,7 @@ for i in range(0, desired_value_in_work_days):
     ty.append(t_yp)
     x.append(xp)
     y.append(res)
+
     if i == desired_value_in_work_days-1:
         # draw lines
         plt.plot(d_x, d)
