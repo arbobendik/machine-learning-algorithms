@@ -27,10 +27,10 @@ class Prediction_Model:
             factors = [reg[3][0], reg[3][1], reg[3][2]]
         elif reg[0] == 1:
             formula: Callable[[float, float], float] = lambda x, p: (x*reg[3][1]+reg[3][0])+p
-            factors = [reg[3][0], reg[3][1]]
+            factors = [reg[3][0], reg[3][1], 0]
         else:
             formula: Callable[[float, float], float] = lambda x, p: (reg[3][0])+p
-            factors = [reg[3][0]]
+            factors = [reg[3][0], 0, 0]
         # return created Regression_Object
         return Regression_Object(reg[2], t, formula, factors)
 
@@ -45,10 +45,7 @@ class Prediction_Model:
         pat_reg = Regression_Library(residual_pattern[0], residual_pattern[1]).get_flat()
         pn = pat_reg[3][0] + x*pat_reg[3][1] + x**2*pat_reg[3][2]
         xs: list = [x] * len(residual_group)
-        print(residual_group)
-        print(xs)
         predicted_ys = list(map(regression_formula, xs, residual_group))
-        print(predicted_ys)
         # get value of floating point indexes in residual_group and it's precision score
         precision = self.__get_point_on_list(pattern_obj.residual_group_precision, pn)
         y = self.__get_point_on_list(predicted_ys, pn)
@@ -56,6 +53,9 @@ class Prediction_Model:
 
     @staticmethod
     def __get_point_on_list(ns, n) -> float:
+        # append first element of list, to prevent that ns[n+1] doesn't exist
         ns.append(ns[0])
-        ca = ((int(n) - int(n + 1)) ** 2 + (ns[int(n)] - ns[int(n + 1)]) ** 2) ** 0.5
+        # calculate gradient between the two points around the desired x-value
+        ca = ((ns[int(n)] - ns[int(n + 1)]) / (int(n) - int(n + 1)))
+        # multiply the calculated deviation with the x-difference to the lower list point
         return ns[int(n)] + ca * (n % 1)

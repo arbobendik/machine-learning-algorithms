@@ -25,12 +25,18 @@ class Pattern_Library:
 
     @staticmethod
     def group(ns, ms, t) -> list:
+        # sort variables in exclusive groups and exclude border areas to prevent overlapping (group averages)
         exclusive_groups: list = []
+        # use inclusive groups to collect and group the ignored values afterwards (group averages)
         inclusive_groups: list = []
+        # list of inclusive and exclusive groups in the form of average group values
         groups: list = []
+        # collect all corresponding x and y values to the groups created above
         groups_xs: list = []
         groups_ys: list = []
+        # create an artificial precision metric
         groups_precision: list = []
+        # save group repetition pattern to detect patterns in the order of the grouped elements
         group_pattern: list = [[], []]
         for r in range(0, len(ms)):
             build_new_exclusive_group: bool = True
