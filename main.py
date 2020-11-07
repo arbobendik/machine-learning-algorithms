@@ -4,7 +4,7 @@ from prediction_model import Prediction_Model
 
 x = [-21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
 y = [98.18, 97.44, 99.6, 99.57, 97.23, 97.65, 97.99, 97.69, 98.32, 105.4, 102.46, 102.54, 102.9, 102.64, 100.2, 100.4, 98.58, 98, 96.9, 96.65, 98.41, 95.99, 99.28, 93.06, 92.5, 94, 97.82, 100.3, 100.08]
-desired_value_in_work_days = 21
+desired_value_in_work_days = 5
 
 d: int
 m: int
@@ -73,27 +73,28 @@ for i in range(0, desired_value_in_work_days):
     ty.append(t_yp)
     x.append(xp)
     y.append(res)
-# draw lines
-plt.plot(d_x, d)
-plt.plot(m_x, m)
-plt.plot(t_x, t)
-plt.scatter(xp, d_yp)
-plt.scatter(xp, m_yp)
-plt.scatter(xp, t_yp)
-plt.scatter(xp, res)
-plt.plot(dx, dy)
-plt.plot(mx, my)
-plt.plot(tx, ty)
-plt.plot(px, py)
-print()
-print(d_yp_info)
-print(m_yp_info)
-print(t_yp_info)
-print()
-print(d_yp)
-print(m_yp)
-print(t_yp)
-print()
-print((m_yp + d_yp + t_yp) / 3)
-# show window
-plt.show()
+    if i == desired_value_in_work_days-1:
+        # draw lines
+        plt.plot(d_x, d)
+        plt.plot(m_x, m)
+        plt.plot(t_x, t)
+        plt.scatter(xp, d_yp)
+        plt.scatter(xp, m_yp)
+        plt.scatter(xp, t_yp)
+        plt.scatter(xp, res)
+        plt.plot(dx, dy)
+        plt.plot(mx, my)
+        plt.plot(tx, ty)
+        plt.plot(px, py)
+        print()
+        print(d_yp_info)
+        print(m_yp_info)
+        print(t_yp_info)
+        print()
+        print(d_yp)
+        print(m_yp)
+        print(t_yp)
+        print()
+        print((m_yp + d_yp + t_yp) / 3)
+        # show window
+        plt.show()
