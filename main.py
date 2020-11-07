@@ -75,7 +75,7 @@ for i in range(0, desired_value_in_work_days):
     y.append(res)
 
     if i == desired_value_in_work_days-1:
-        # draw lines
+        # draw lines once in the last cycle
         plt.plot(d_x, d)
         plt.plot(m_x, m)
         plt.plot(t_x, t)
