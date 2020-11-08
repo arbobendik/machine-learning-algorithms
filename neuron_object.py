@@ -10,5 +10,3 @@ class Neuron:
         self.pointers_address = pointers_address
         self.pointers_thresholds = pointers_thresholds
         self.address = address
-
-    def __init__(self):

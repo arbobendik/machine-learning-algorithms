@@ -1,10 +1,10 @@
 from numpy import linspace
 import matplotlib.pyplot as plt
-from prediction_model import Prediction_Model
+from prediction_library import Prediction_Library
 
 x = [-21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
 y = [98.18, 97.44, 99.6, 99.57, 97.23, 97.65, 97.99, 97.69, 98.32, 105.4, 102.46, 102.54, 102.9, 102.64, 100.2, 100.4, 98.58, 98, 96.9, 96.65, 98.41, 95.99, 99.28, 93.06, 92.5, 94, 97.82, 100.3, 100.08]
-desired_value_in_work_days = 50
+desired_value_in_work_days = 5
 
 d: int
 m: int
@@ -28,19 +28,19 @@ for i in range(0, desired_value_in_work_days):
     print(xp)
     print()
 
-    pm_d = Prediction_Model(dx, dy)
+    pm_d = Prediction_Library(dx, dy)
     reg_d = pm_d.get_regression_object()
     pat_d = pm_d.get_pattern_object(reg_d)
     d_yp_info = pm_d.predict(reg_d, pat_d, xp)
     d_yp = d_yp_info[1]
 
-    pm_m = Prediction_Model(mx, my)
+    pm_m = Prediction_Library(mx, my)
     reg_m = pm_m.get_regression_object()
     pat_m = pm_m.get_pattern_object(reg_m)
     m_yp_info = pm_m.predict(reg_m, pat_m, xp)
     m_yp = m_yp_info[1]
 
-    pm_t = Prediction_Model(tx, ty)
+    pm_t = Prediction_Library(tx, ty)
     reg_t = pm_t.get_regression_object()
     pat_t = pm_t.get_pattern_object(reg_t)
     t_yp_info = pm_d.predict(reg_t, pat_t, xp)
