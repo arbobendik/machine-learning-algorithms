@@ -5,8 +5,8 @@
 from typing import Callable
 from regression_object import Regression_Object
 from pattern_object import Pattern_Object
-from regression_system import Regression_Library
-from detect_patterns import Pattern_Library
+from regression_library import Regression_Library
+from pattern_library import Pattern_Library
 
 
 class Prediction_Model:
