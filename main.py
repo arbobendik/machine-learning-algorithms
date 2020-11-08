@@ -25,8 +25,6 @@ for i in range(0, desired_value_in_work_days):
     ty = y[len_t:]
 
     xp = len(x)-21
-    print(xp)
-    print()
 
     pm_d = Prediction_Library(dx, dy)
     reg_d = pm_d.get_regression_object()
@@ -55,11 +53,8 @@ for i in range(0, desired_value_in_work_days):
     # set formulas
     print()
     d = reg_d.factors[2] * d_x**2 + reg_d.factors[1] * d_x + reg_d.factors[0]
-    print(reg_d.factors)
     m = reg_m.factors[2] * m_x**2 + reg_m.factors[1] * m_x + reg_m.factors[0]
-    print(reg_m.factors)
     t = reg_t.factors[2] * t_x**2 + reg_m.factors[1] * t_x + reg_m.factors[0]
-    print(reg_t.factors)
 
     # draw points
     dx.append(xp)
