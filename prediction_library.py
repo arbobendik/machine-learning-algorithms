@@ -1,7 +1,6 @@
 # This class was created by Bendik Arbogast at the 27.10.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
-from typing import Callable
 from regression_object import Regression_Object
 from pattern_object import Pattern_Object
 from regression_library import Regression_Library
@@ -38,8 +37,6 @@ class Prediction_Library:
         # determine which index of residual_group is used at x
         pat_reg = Regression_Library(residual_pattern[0], residual_pattern[1]).get_flat()
         pn = pat_reg.formula(x)
-        print(pn)
-        xs: list = [x] * len(residual_group)
         predicted_ys = [regression_obj.formula(x) + r for r in residual_group]
         # get value of floating point indexes in residual_group and it's precision score
         precision = self.__get_point_on_list(pattern_obj.residual_group_precision, pn)
