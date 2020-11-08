@@ -1,22 +1,20 @@
 # This class was created by Bendik Arbogast at the 27.10.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
-
 from typing import Callable
 from regression_object import Regression_Object
 from pattern_object import Pattern_Object
-from regression_system import Regression_Library
-from detect_patterns import Pattern_Library
+from regression_library import Regression_Library
+from pattern_library import Pattern_Library
 
 
-class Prediction_Model:
+class Prediction_Library:
     xs: list = []
     ys: list = []
 
     def __init__(self, x_values, y_values):
         self.xs = x_values
         self.ys = y_values
-        self.regression = []
 
     def get_regression_object(self) -> Regression_Object:
         reg = Regression_Library(self.xs, self.ys).fit()

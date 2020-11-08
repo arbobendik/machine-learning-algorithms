@@ -1,28 +1,10 @@
-# This class was created by Bendik Arbogast at the 23.10.2020 and is available free of charge to the general public.
+# This class was created by Bendik Arbogast at the 08.11.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
-
-from regression_system import Regression_Library as Reg
-from pattern_object import Pattern_Object
+from regression_library import Regression_Library
 
 
-class Pattern_Library:
-
-    residual_pattern: list = []
-    residual_group: list = []
-    residual_group_precision: list = []
-
-    def look_for_patterns(self, regression_obj, xs) -> Pattern_Object:
-        # get pattern tolerance and regression curve coefficients from regression object
-        res = regression_obj.residuals
-        t = regression_obj.tolerance
-        res = self.group(xs, res, t)
-        groups = res[1]
-        group_pattern = res[0]
-        # later the model should use trained, known patterns to describe the residual_pattern
-        precision = res[4]
-        return Pattern_Object(group_pattern, groups, precision)
-
+class Classification:
     @staticmethod
     def group(ns, ms, t) -> list:
         # sort variables in exclusive groups and exclude border areas to prevent overlapping (group averages)
@@ -53,7 +35,7 @@ class Pattern_Library:
                     group_pattern[1].append(gi)
                     groups_xs[gi].append(ns[r])
                     groups_ys[gi].append(ms[r])
-                    this_regression = Reg(groups_xs[gi], groups_ys[gi]).get_flat()
+                    this_regression = Regression_Library(groups_xs[gi], groups_ys[gi]).get_flat()
                     # save new calculated average value of group
                     exclusive_groups[i] = this_regression[3][0]
                     groups[gi] = this_regression[3][0]
@@ -78,7 +60,7 @@ class Pattern_Library:
                         group_pattern[1].append(gy)
                         groups_xs[gy].append(abs(ns[r]))
                         groups_ys[gy].append(ms[r])
-                        this_regression = Reg(groups_xs[gy], groups_ys[gy]).get_flat()
+                        this_regression = Regression_Library(groups_xs[gy], groups_ys[gy]).get_flat()
                         # save new calculated average value of group
                         inclusive_groups[y] = this_regression[3][0]
                         groups[gy] = this_regression[3][0]
@@ -101,11 +83,5 @@ class Pattern_Library:
                 groups_ys.append([ms[r]])
                 groups_precision.append(0)
                 group_pattern[0].append(ns[r])
-                group_pattern[1].append(len(groups)-1)
+                group_pattern[1].append(len(groups) - 1)
         return [group_pattern, groups, groups_xs, groups_ys, groups_precision]
-
-    @staticmethod
-    def __get_point_on_list(ns, n) -> float:
-        ns.append(ns[0])
-        ca = ((int(n) - int(n + 1)) ** 2 + (ns[int(n)] - ns[int(n + 1)]) ** 2) ** 0.5
-        return ns[int(n)] + ca * (n % 1)
