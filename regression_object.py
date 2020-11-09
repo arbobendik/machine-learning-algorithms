@@ -14,7 +14,7 @@ class Regression_Object:
     def __int__(self):
         pass
 
-    def __init__(self, factors, residuals, formula, standard_deviation, precision,):
+    def __init__(self, factors, residuals, formula, standard_deviation, precision):
         self.factors = factors
         self.residuals = residuals
         self.standard_deviation = standard_deviation
