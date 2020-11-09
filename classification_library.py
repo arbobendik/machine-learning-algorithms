@@ -6,7 +6,7 @@ from regression_library import Regression_Library
 
 class Classification_Library:
     @staticmethod
-    def group(ns, ms, t) -> list:
+    def group(ns: list, ms: list, t) -> list:
         # sort variables in exclusive groups and exclude border areas to prevent overlapping (group averages)
         exclusive_groups: list = []
         # use inclusive groups to collect and group the ignored values afterwards (group averages)

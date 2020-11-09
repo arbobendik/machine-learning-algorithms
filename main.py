@@ -4,7 +4,7 @@ from prediction_library import Prediction_Library
 
 x = [-21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
 y = [98.18, 97.44, 99.6, 99.57, 97.23, 97.65, 97.99, 97.69, 98.32, 105.4, 102.46, 102.54, 102.9, 102.64, 100.2, 100.4, 98.58, 98, 96.9, 96.65, 98.41, 95.99, 99.28, 93.06, 92.5, 94, 97.82, 100.3, 100.08]
-desired_value_in_work_days = 5
+desired_value_in_work_days = 1
 
 d: int
 m: int
@@ -52,9 +52,9 @@ for i in range(0, desired_value_in_work_days):
     t_x = linspace(xp+1, xp-len(x), 5000)
     # set formulas
     print()
-    d = reg_d.factors[2] * d_x**2 + reg_d.factors[1] * d_x + reg_d.factors[0]
-    m = reg_m.factors[2] * m_x**2 + reg_m.factors[1] * m_x + reg_m.factors[0]
-    t = reg_t.factors[2] * t_x**2 + reg_m.factors[1] * t_x + reg_m.factors[0]
+    d = reg_d.formula(d_x)
+    m = reg_m.formula(m_x)
+    t = reg_t.formula(t_x)
 
     # draw points
     dx.append(xp)

@@ -30,7 +30,7 @@ class Regression_Library:
             # return everything in the form of a Regression_Object
             return Regression_Object([a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return Regression_Object()
+            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
 
     def get_linear(self) -> Regression_Object:
         try:
@@ -67,7 +67,7 @@ class Regression_Library:
             # get the total deviation of all points from the regression line
             td = sum(list(map(lambda x, y, xi, yi: ((x - xi) ** 2 + (y - yi) ** 2) ** 0.5, xs, ys, ixs, iys)))
             # calculate the distance between the first and last orthogonal interception
-            # with the regression line as a scale factor
+            # with the regression line as a factor of scale
             mx = [min(ixs), max(ixs)]
             my = [a * x + b for x in mx]
             sf = ((mx[0] - mx[1]) ** 2 + (my[0] - my[1]) ** 2)**0.5
@@ -80,7 +80,7 @@ class Regression_Library:
             standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
             return Regression_Object([b, a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return Regression_Object()
+            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
 
     def get_quadratic(self) -> Regression_Object:
         try:
@@ -153,7 +153,7 @@ class Regression_Library:
             standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
             return Regression_Object([c, b, a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return Regression_Object()
+            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
 
     @staticmethod
     def __quadratic_process_shortest_distance(a, b, c) -> Callable[[float, float], list]:

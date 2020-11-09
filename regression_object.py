@@ -7,7 +7,7 @@ from typing import Callable
 class Regression_Object:
     factors: list = []
     residuals: list = []
-    formula: Callable[[float], float] = lambda x: x
+    formula: Callable[[float], float] = lambda x: 0
     standard_deviation: float = 0.0
     precision: float = 0.0
 

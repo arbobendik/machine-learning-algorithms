@@ -21,6 +21,9 @@ class Prediction_Library:
         q = reg.get_quadratic()
         li = reg.get_linear()
         f = reg.get_flat()
+        print(f.precision)
+        print(li.precision)
+        print(q.precision)
         if li.precision <= q.precision and f.precision <= q.precision:
             return q
         elif f.precision <= li.precision:
