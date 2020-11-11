@@ -5,14 +5,11 @@ from typing import Callable
 
 
 class Regression_Object:
-    factors: list = []
-    residuals: list = []
-    formula: Callable[[float], float] = lambda x: 0.0
-    standard_deviation: float = 0.0
-    precision: float = 0.0
-
-    def __int__(self):
-        pass
+    factors: list
+    residuals: list
+    formula: Callable[[float], float]
+    standard_deviation: float
+    precision: float
 
     def __init__(self, factors, residuals, formula, standard_deviation, precision):
         self.factors = factors
