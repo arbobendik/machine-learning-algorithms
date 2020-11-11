@@ -2,9 +2,9 @@ from numpy import linspace
 import matplotlib.pyplot as plt
 from prediction_library import Prediction_Library
 
-x = [-21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-y = [98.18, 97.44, 99.6, 99.57, 97.23, 97.65, 97.99, 97.69, 98.32, 105.4, 102.46, 102.54, 102.9, 102.64, 100.2, 100.4, 98.58, 98, 96.9, 96.65, 98.41, 95.99, 99.28, 93.06, 92.5, 94, 97.82, 100.3, 100.08, 101.26, 99.48]
-desired_value_in_work_days = 2
+x = [-21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+y = [98.18, 97.44, 99.6, 99.57, 97.23, 97.65, 97.99, 97.69, 98.32, 105.4, 102.46, 102.54, 102.9, 102.64, 100.2, 100.4, 98.58, 98, 96.9, 96.65, 98.41, 95.99, 99.28, 93.06, 92.5, 94, 97.82, 100.3, 100.08, 101.26, 99.48, 101.4]
+desired_value_in_work_days = 1
 
 for i in range(0, desired_value_in_work_days):
     len_d = len(x)-5
@@ -65,6 +65,9 @@ for i in range(0, desired_value_in_work_days):
     y.append(res)
 
     if i == desired_value_in_work_days-1:
+        print(reg_d.factors)
+        print(reg_m.factors)
+        print(reg_t.factors)
         # draw lines once in the last cycle
         plt.plot(d_x, d)
         plt.plot(m_x, m)
@@ -79,9 +82,9 @@ for i in range(0, desired_value_in_work_days):
         plt.plot(px, py)
         print((m_yp + d_yp + t_yp) / 3)
         # show window
-test = 1
-x = x[:(len(x)-2-test)]
-y = y[:(len(y)-2-test)]
+test = 2
+x = x[:(len(x)-2-desired_value_in_work_days)]
+y = y[:(len(y)-2-desired_value_in_work_days)]
 desired_value_in_work_days += test
 for i in range(0, desired_value_in_work_days):
     len_d = len(x)-5
@@ -142,6 +145,9 @@ for i in range(0, desired_value_in_work_days):
     y.append(res)
 
     if i == desired_value_in_work_days-1:
+        print(reg_d.factors)
+        print(reg_m.factors)
+        print(reg_t.factors)
         # draw lines once in the last cycle
         plt.plot(d_x, d)
         plt.plot(m_x, m)
