@@ -1,8 +1,8 @@
 # This class was created by Bendik Arbogast at the 27.10.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
-from regression import Regression
-from pattern import Pattern
+from Regression import Regression
+from Pattern import Pattern
 from regression_library import Regression_Library
 from pattern_library import Pattern_Library
 
