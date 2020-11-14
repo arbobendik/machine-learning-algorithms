@@ -1,6 +1,7 @@
 # This class was created by Bendik Arbogast at the 17.10.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
+from regression_object import Regression_Object
 from typing import Callable
 
 
@@ -12,19 +13,7 @@ class Regression_Library:
         self.xs = x_values
         self.ys = y_values
 
-    def fit(self) -> list:
-        # get best fitting regression by comparing precision and return it
-        q = self.get_quadratic()
-        li = self.get_linear()
-        f = self.get_flat()
-        if li[1] <= q[1] and f[1] <= q[1]:
-            return q
-        elif f[1] <= li[1]:
-            return li
-        else:
-            return f
-
-    def get_flat(self) -> list:
+    def get_flat(self) -> Regression_Object:
         try:
             xs = self.xs
             ys = self.ys
@@ -36,11 +25,14 @@ class Regression_Library:
                 precision = 0.0
             else:
                 precision = 1 / (sum([abs(r) for r in res]) / (max(xs) - min(xs)) + 1)
-            return [0, precision, res, [a, 0, 0]]
+            formula: Callable[[float], float] = lambda x: a
+            standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
+            # return everything in the form of a Regression_Object
+            return Regression_Object([a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return [0, 0, 0, False]
+            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
 
-    def get_linear(self) -> list:
+    def get_linear(self) -> Regression_Object:
         try:
             # get global variables
             xs = self.xs
@@ -75,7 +67,7 @@ class Regression_Library:
             # get the total deviation of all points from the regression line
             td = sum(list(map(lambda x, y, xi, yi: ((x - xi) ** 2 + (y - yi) ** 2) ** 0.5, xs, ys, ixs, iys)))
             # calculate the distance between the first and last orthogonal interception
-            # with the regression line as a scale factor
+            # with the regression line as a factor of scale
             mx = [min(ixs), max(ixs)]
             my = [a * x + b for x in mx]
             sf = ((mx[0] - mx[1]) ** 2 + (my[0] - my[1]) ** 2)**0.5
@@ -83,12 +75,14 @@ class Regression_Library:
             precision = 1 / (td / sf + 1)
             # get residuals
             res = list(map(lambda x, y: y - (a*x + b), xs, ys))
-            # return everything in the form of [max_exponent, precision, residuals, factors[i] = [factors of x**i]]
-            return [1, precision, res, [b, a, 0]]
+            # return everything in the form of a Regression_Object
+            formula: Callable[[float], float] = lambda x: a*x + b
+            standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
+            return Regression_Object([b, a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return [1, 0, 0, False]
+            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
 
-    def get_quadratic(self) -> list:
+    def get_quadratic(self) -> Regression_Object:
         try:
             # get global variables
             xs = self.xs
@@ -155,9 +149,11 @@ class Regression_Library:
             # get residuals
             res = list(map(lambda x, y: y - (a * x**2 + b * x + c), xs, ys))
             # return everything in the form of [max_exponent, precision, residuals, factors[i] = [factors of x**i]]
-            return [2, precision, res, [c, b, a]]
+            formula: Callable[[float], float] = lambda x: a * x**2 + b * x + c
+            standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
+            return Regression_Object([c, b, a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return [2, 0, 0, False]
+            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
 
     @staticmethod
     def __quadratic_process_shortest_distance(a, b, c) -> Callable[[float, float], list]:

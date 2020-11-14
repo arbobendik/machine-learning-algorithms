@@ -3,7 +3,7 @@
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
 class Neuron:
     pointers_address: list = []
-    thresholds: list = []
+    pointers_thresholds: list = []
     address: int
 
     def __init__(self, pointers_address, pointers_thresholds, address):

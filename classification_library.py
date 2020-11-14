@@ -4,9 +4,9 @@
 from regression_library import Regression_Library
 
 
-class Classification:
+class Classification_Library:
     @staticmethod
-    def group(ns, ms, t) -> list:
+    def group(ns: list, ms: list, t) -> list:
         # sort variables in exclusive groups and exclude border areas to prevent overlapping (group averages)
         exclusive_groups: list = []
         # use inclusive groups to collect and group the ignored values afterwards (group averages)
@@ -35,12 +35,12 @@ class Classification:
                     group_pattern[1].append(gi)
                     groups_xs[gi].append(ns[r])
                     groups_ys[gi].append(ms[r])
-                    this_regression = Regression_Library(groups_xs[gi], groups_ys[gi]).get_flat()
+                    reg = Regression_Library(groups_xs[gi], groups_ys[gi]).get_flat()
                     # save new calculated average value of group
-                    exclusive_groups[i] = this_regression[3][0]
-                    groups[gi] = this_regression[3][0]
+                    exclusive_groups[i] = reg.factors[0]
+                    groups[gi] = reg.factors[0]
                     # save precision of calculation of average value
-                    groups_precision[gi] = 1 / ((sum([abs(r) for r in this_regression[2]]) / (max(ns) - min(ns))) + 1)
+                    groups_precision[gi] = 1 / ((sum([abs(r) for r in reg.residuals]) / (max(ns) - min(ns))) + 1)
                     build_new_exclusive_group = False
                 # test if y is in the range of the tolerance next to the average of any group
                 # to prevent groups from overlapping
@@ -60,13 +60,13 @@ class Classification:
                         group_pattern[1].append(gy)
                         groups_xs[gy].append(abs(ns[r]))
                         groups_ys[gy].append(ms[r])
-                        this_regression = Regression_Library(groups_xs[gy], groups_ys[gy]).get_flat()
+                        reg = Regression_Library(groups_xs[gy], groups_ys[gy]).get_flat()
                         # save new calculated average value of group
-                        inclusive_groups[y] = this_regression[3][0]
-                        groups[gy] = this_regression[3][0]
+                        inclusive_groups[y] = reg.factors[0]
+                        groups[gy] = reg.factors[0]
                         # save precision of calculation of average value
                         groups_precision[gy] = 1 / (
-                                (sum([abs(r) for r in this_regression[2]]) / (max(ns) - min(ns))) + 1)
+                                (sum([abs(r) for r in reg.residuals]) / (max(ns) - min(ns))) + 1)
                         build_new_inclusive_group = False
                 if build_new_inclusive_group:
                     inclusive_groups.append(ms[r])
