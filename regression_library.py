@@ -1,7 +1,7 @@
 # This class was created by Bendik Arbogast at the 17.10.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
-from regression_object import Regression_Object
+from regression import Regression
 from typing import Callable
 
 
@@ -13,7 +13,7 @@ class Regression_Library:
         self.xs = x_values
         self.ys = y_values
 
-    def get_flat(self) -> Regression_Object:
+    def get_flat(self) -> Regression:
         try:
             xs = self.xs
             ys = self.ys
@@ -28,11 +28,11 @@ class Regression_Library:
             formula: Callable[[float], float] = lambda x: a
             standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
             # return everything in the form of a Regression_Object
-            return Regression_Object([a], res, formula, standard_deviation, precision)
+            return Regression([a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
+            return Regression([0], [0], lambda x: 0, 0.0, 0.0)
 
-    def get_linear(self) -> Regression_Object:
+    def get_linear(self) -> Regression:
         try:
             # get global variables
             xs = self.xs
@@ -78,11 +78,11 @@ class Regression_Library:
             # return everything in the form of a Regression_Object
             formula: Callable[[float], float] = lambda x: a*x + b
             standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
-            return Regression_Object([b, a], res, formula, standard_deviation, precision)
+            return Regression([b, a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
+            return Regression([0], [0], lambda x: 0, 0.0, 0.0)
 
-    def get_quadratic(self) -> Regression_Object:
+    def get_quadratic(self) -> Regression:
         try:
             # get global variables
             xs = self.xs
@@ -151,9 +151,9 @@ class Regression_Library:
             # return everything in the form of [max_exponent, precision, residuals, factors[i] = [factors of x**i]]
             formula: Callable[[float], float] = lambda x: a * x**2 + b * x + c
             standard_deviation = (sum([r ** 2 for r in res]) / len(res)) ** 0.5
-            return Regression_Object([c, b, a], res, formula, standard_deviation, precision)
+            return Regression([c, b, a], res, formula, standard_deviation, precision)
         except ZeroDivisionError:
-            return Regression_Object([0], [0], lambda x: 0, 0.0, 0.0)
+            return Regression([0], [0], lambda x: 0, 0.0, 0.0)
 
     @staticmethod
     def __quadratic_process_shortest_distance(a, b, c) -> Callable[[float, float], list]:

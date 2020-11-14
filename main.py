@@ -23,20 +23,20 @@ for i in range(0, desired_value_in_work_days):
     xp = len(x)-21
 
     pm_d = Prediction_Library(dx, dy)
-    reg_d = pm_d.get_regression_object()
-    pat_d = pm_d.get_pattern_object(reg_d)
+    reg_d = pm_d.get_regression()
+    pat_d = pm_d.get_pattern(reg_d)
     d_yp_info = pm_d.predict(reg_d, pat_d, xp)
     d_yp = d_yp_info[1]
 
     pm_m = Prediction_Library(mx, my)
-    reg_m = pm_m.get_regression_object()
-    pat_m = pm_m.get_pattern_object(reg_m)
+    reg_m = pm_m.get_regression()
+    pat_m = pm_m.get_pattern(reg_m)
     m_yp_info = pm_m.predict(reg_m, pat_m, xp)
     m_yp = m_yp_info[1]
 
     pm_t = Prediction_Library(tx, ty)
-    reg_t = pm_t.get_regression_object()
-    pat_t = pm_t.get_pattern_object(reg_t)
+    reg_t = pm_t.get_regression()
+    pat_t = pm_t.get_pattern(reg_t)
     t_yp_info = pm_d.predict(reg_t, pat_t, xp)
     t_yp = t_yp_info[1]
 

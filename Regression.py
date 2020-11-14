@@ -4,7 +4,7 @@
 from typing import Callable
 
 
-class Regression_Object:
+class Regression:
     factors: list
     residuals: list
     formula: Callable[[float], float]
