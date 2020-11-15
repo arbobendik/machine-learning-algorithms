@@ -3,40 +3,72 @@
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
 from Neuron import Neuron
 import sqlite3
+import json
 
 
 class Database:
-    def __init__(self,):
+    name: str
 
-verbindung = sqlite3.connect("neural_net.db")
-zeiger = verbindung.cursor()
+    def __init__(self, name: str):
+        # establish connection
+        connection = sqlite3.connect(name)
+        cursor = connection.cursor()
+        # save name as attribute
+        self.name = name
+        # create Neuron object table
+        sql_query = """
+        CREATE TABLE IF NOT EXISTS neurons (
+        pointers_address VARCHAR,
+        pointers VARCHAR,
+        address VARCHAR
+        );"""
+        cursor.execute(sql_query)
+        connection.commit()
 
-sql_anweisung = """
-CREATE TABLE IF NOT EXISTS adressen (
-vorname VARCHAR(20), 
-nachname VARCHAR(30), 
-geburtstag DATE
-);"""
+    def set_neuron(self, neuron: Neuron):
+        # establish connection
+        connection = sqlite3.connect(self.name)
+        cursor = connection.cursor()
+        # save object attributes as locals and convert lists to json to store them in the database
+        pointers_addresses = json.dumps(neuron.pointers_addresses)
+        pointers_thresholds = json.dumps(neuron.pointers_thresholds)
+        address = neuron.address
+        # make the data ready for the database
+        db_neuron = [pointers_addresses, pointers_thresholds, address]
+        cursor.execute("INSERT INTO neurons VALUES (?, ?, ?)", db_neuron)
+        connection.commit()
 
-zeiger.execute(sql_anweisung)
+    def delete_neuron(self, address):
+        # establish connection
+        connection = sqlite3.connect(self.name)
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM neurons WHERE address=?", (address,))
+        connection.commit()
+
+    def get_neuron(self, address) -> Neuron:
+        # establish connection
+        connection = sqlite3.connect(self.name)
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM neurons WHERE address=?", (address, ))
+        db_neuron = cursor.fetchall()[0]
+        # convert json strings to lists
+        pointers_address = json.loads(db_neuron[0])
+        pointers_thresholds = json.loads(db_neuron[1])
+        address = db_neuron[2]
+        connection.commit()
+        # package fetched data in Neuron
+        return Neuron(pointers_address, pointers_thresholds, address)
 
 
-beruehmtheiten = [('Georg Wilhelm Friedrich', 'Hegel', '27.08.1770'),
-                  ('Johann Christian Friedrich', 'Hölderlin', '20.03.1770'),
-                  ('Rudolf Ludwig Carl', 'Virchow', '13.10.1821')]
-
-zeiger.executemany("""
-                INSERT INTO personen 
-                       VALUES (?,?,?)
-                """, beruehmtheiten)
-
-zeiger.execute(sql_anweisung)
-nachname   = "Schiller"
-vorname    = "Johann Christoph Friedrich"
-
-zeiger.execute("UPDATE personen SET vorname=? WHERE nachname=?", (vorname, nachname))
-verbindung.commit()
-zeiger.execute("SELECT vorname FROM personen WHERE vorname=?", ('*',))
-inhalt = zeiger.fetchall()
-print(inhalt)
-verbindung.close()
+neu = Neuron(["3r4782q9p", "w9ersffdsp", "aweü89vzf"], [0.435, 0.3724, 0.57], "afg5o8r6w5")
+db = Database("net")
+db.set_neuron(neu)
+nn = db.get_neuron("afg5o8r6w5")
+print(nn.pointers_addresses)
+print(nn.pointers_thresholds)
+print(nn.address)
+db.delete_neuron(nn.address)
+nn = db.get_neuron("afg5o8r6w5")
+print(nn.pointers_addresses)
+print(nn.pointers_thresholds)
+print(nn.address)

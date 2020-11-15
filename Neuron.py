@@ -2,11 +2,11 @@
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
 class Neuron:
-    pointers_address: list = []
+    pointers_addresses: list = []
     pointers_thresholds: list = []
     address: int
 
-    def __init__(self, pointers_address, pointers_thresholds, address):
-        self.pointers_address = pointers_address
+    def __init__(self, pointers_addresses, pointers_thresholds, address):
+        self.pointers_addresses = pointers_addresses
         self.pointers_thresholds = pointers_thresholds
         self.address = address
