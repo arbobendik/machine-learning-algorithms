@@ -6,7 +6,7 @@ class Pattern:
     residual_group: list = []
     residual_group_precision: list = []
 
-    def __init__(self, residual_pattern, residual_group, residual_group_precision):
+    def __init__(self, residual_pattern: list, residual_group: list, residual_group_precision: list):
         self.residual_pattern = residual_pattern
         self.residual_group = residual_group
         self.residual_group_precision = residual_group_precision

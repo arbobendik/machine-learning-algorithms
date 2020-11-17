@@ -33,7 +33,7 @@ class Prediction_Library:
 
     def predict(self, regression: Regression, pattern: Pattern, x) -> list:
         # determine which index of residual_group is used at x
-        pat_reg = Regression_Library(pattern.residual_pattern[0], pattern.residual_pattern[1]).get_flat()
+        pat_reg = Regression_Library(pattern.residual_pattern[0], pattern.residual_pattern[1]).get_linear()
         pn = pat_reg.formula(x)
         predicted_ys = [regression.formula(x) + r for r in pattern.residual_group]
         # get value of floating point indexes in residual_group and it's precision score

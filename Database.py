@@ -58,17 +58,3 @@ class Database:
         connection.commit()
         # package fetched data in Neuron
         return Neuron(pointers_address, pointers_thresholds, address)
-
-
-neu = Neuron(["3r4782q9p", "w9ersffdsp", "aweü89vzf"], [0.435, 0.3724, 0.57], "afg5o8r6w5")
-db = Database("net")
-db.set_neuron(neu)
-nn = db.get_neuron("afg5o8r6w5")
-print(nn.pointers_addresses)
-print(nn.pointers_thresholds)
-print(nn.address)
-db.delete_neuron(nn.address)
-nn = db.get_neuron("afg5o8r6w5")
-print(nn.pointers_addresses)
-print(nn.pointers_thresholds)
-print(nn.address)

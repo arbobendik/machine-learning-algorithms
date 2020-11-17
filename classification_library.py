@@ -1,12 +1,14 @@
 # This class was created by Bendik Arbogast at the 08.11.2020 and is available free of charge to the general public.
 # All rights reserved. If you have any questions or ideas to improve the contents of this file
 # please consider writing an email to arbobendik@gmail.com or contact me on GitHub.
+import copy
+import functools
 from regression_library import Regression_Library
 
 
 class Classification_Library:
     @staticmethod
-    def group(ns: list, ms: list, t) -> list:
+    def group_in_classes(ns: list, ms: list, t: float) -> list:
         # sort variables in exclusive groups and exclude border areas to prevent overlapping (group averages)
         exclusive_groups: list = []
         # use inclusive groups to collect and group the ignored values afterwards (group averages)
@@ -84,4 +86,23 @@ class Classification_Library:
                 groups_precision.append(0)
                 group_pattern[0].append(ns[r])
                 group_pattern[1].append(len(groups) - 1)
-        return [group_pattern, groups, groups_xs, groups_ys, groups_precision]
+        return [group_pattern, groups, groups_precision]
+
+    @staticmethod
+    def sort_group(unsorted_groups: list) -> list:
+        # sort groups by their values
+        new_groups: list = []
+        old_groups: list = copy.deepcopy(unsorted_groups)
+        for i in range(0, len(unsorted_groups)):
+            mini = min(old_groups)
+            new_groups.append(mini)
+            old_groups.remove(mini)
+        return new_groups
+
+    @staticmethod
+    def new_pattern(groups, ngs, pgs) -> list:
+        dictionary: list = []
+        for i in range(0, len(groups)):
+            match = functools.reduce(lambda n, ng: ng if groups[i] == ngs[ng] else n, range(0, len(ngs)))
+            dictionary.append(match)
+        return [pgs[0], [dictionary[ps] for ps in pgs[1]]]

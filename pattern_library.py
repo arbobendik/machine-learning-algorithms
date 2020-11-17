@@ -13,12 +13,14 @@ class Pattern_Library:
     @staticmethod
     def look_for_patterns(regression, xs) -> Pattern:
         # get pattern tolerance and regression curve coefficients from regression object
-        res = Classification_Library.group(xs, regression.residuals, regression.standard_deviation)
-        groups = res[1]
+        classification = Classification_Library()
+        res = classification.group_in_classes(xs, regression.residuals, regression.standard_deviation)
         group_pattern = res[0]
-        # later the model should use trained, known patterns to describe the residual_pattern
-        precision = res[4]
-        return Pattern(group_pattern, groups, precision)
+        groups: list = res[1]
+        precision = res[2]
+        new_groups = classification.sort_group(groups)
+        new_pattern = classification.new_pattern(groups, new_groups, group_pattern)
+        return Pattern(new_pattern, groups, precision)
 
     @staticmethod
     def __get_point_on_list(ns, n) -> float:
