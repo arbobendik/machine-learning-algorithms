@@ -19,8 +19,10 @@ class Pattern_Library:
         groups: list = res[1]
         precision = res[2]
         new_groups = classification.sort_group(groups)
+        print(groups)
+        print(new_groups)
         new_pattern = classification.new_pattern(groups, new_groups, group_pattern)
-        return Pattern(new_pattern, groups, precision)
+        return Pattern(new_pattern, new_groups, precision)
 
     @staticmethod
     def __get_point_on_list(ns, n) -> float:
