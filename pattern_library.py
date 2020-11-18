@@ -15,9 +15,7 @@ class Pattern_Library:
         # get pattern tolerance and regression curve coefficients from regression object
         classification = Classification_Library()
         res = classification.group_in_classes(xs, regression.residuals, regression.standard_deviation)
-        group_pattern = res[0]
-        groups: list = res[1]
-        precision = res[2]
+        group_pattern, groups, precision = res
         new_groups = classification.sort_group(groups)
         new_pattern = classification.new_pattern(groups, new_groups, group_pattern)
         return Pattern(new_pattern, new_groups, precision)

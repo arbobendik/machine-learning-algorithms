@@ -39,12 +39,13 @@ class Prediction_Library:
         # get value of floating point indexes in residual_group and it's precision score
         precision = self.__get_point_on_list(pattern.residual_group_precision, pn)
         y = self.__get_point_on_list(predicted_ys, pn)
+        print(predicted_ys)
+        print(pn)
+        print(y)
         return [precision, y, predicted_ys]
 
     @staticmethod
     def __get_point_on_list(ns, n) -> float:
-        # append first element of list, to prevent that ns[n+1] doesn't exist
-        ns.append(ns[0])
         # calculate gradient between the two points around the desired x-value
         ca = ((ns[int(n)] - ns[int(n + 1)]) / (int(n) - int(n + 1)))
         # multiply the calculated deviation with the x-difference to the lower list point

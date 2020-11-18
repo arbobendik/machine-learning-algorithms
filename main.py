@@ -82,7 +82,7 @@ for i in range(0, desired_value_in_work_days):
         plt.plot(px, py)
         print((m_yp + d_yp + t_yp) / 3)
         # show window
-test = 5
+test = 6
 x = x[:(len(x)-test-desired_value_in_work_days)]
 y = y[:(len(y)-test-desired_value_in_work_days)]
 desired_value_in_work_days += test
